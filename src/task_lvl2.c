@@ -303,6 +303,8 @@ int main() {
 }
 
 /* ---------------------------------------------------------------------
+Task 5 - Структура Person (waight)
+
 Напишите программу, которая читает данные о нескольких людях, вычисляет 
 средний вес, а затем выводит фамилии и имена тех, чей вес строго больше 
 среднего.
@@ -350,7 +352,7 @@ No candidates
 typedef struct {
     char name[51];
     char surname[51];
-    int weigh;
+    int weight;
 } Person;
 
 int main() {
@@ -369,19 +371,20 @@ int main() {
         if (temp) strcpy(person[i].name, temp);
         temp = strtok(NULL, " \n");
         if (temp) strcpy(person[i].surname, temp);
-        person[i].weigh = atoi(strtok(NULL, " \n"));
+        temp = strtok(NULL, " \n");
+        if (temp) person[i].weight = atoi(temp);
     }
 
-    int total_weigh = 0;
+    int total_weight = 0;
     for (int i = 0; i < n; i++) {
-        total_weigh += person[i].weigh;
+        total_weight += person[i].weight;
     }
 
-    double avarage = total_weigh / n;
+    double avarage = (double)total_weight / n;
     int count = 0;
 
     for (int i = 0; i < n; i++) {
-        if (person[i].weigh > avarage) {
+        if (person[i].weight > avarage) {
             printf("%s %s\n", person[i].name, person[i].surname);
             count ++;
         }
