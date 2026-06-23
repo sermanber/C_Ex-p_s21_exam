@@ -276,7 +276,7 @@ int main () {
 }
 
 /* ---------------------------------------------------------------------
-Task 4 - Перемножение квадратных матриц
+Task 4 - вектор
 
 На вход подаются координаты трёхмерного вектора (x, y, z).
 Программа должна вычислить и вывести его длину.
@@ -299,5 +299,95 @@ int main() {
 
     printf("%lf", v);    
     
+    return 0;
+}
+
+/* ---------------------------------------------------------------------
+Напишите программу, которая читает данные о нескольких людях, вычисляет 
+средний вес, а затем выводит фамилии и имена тех, чей вес строго больше 
+среднего.
+
+Входные данные
+Первая строка содержит целое число n (1 ≤ n ≤ 100) — количество людей.
+Далее следуют n строк, каждая содержит:
+фамилию (строка без пробелов, длина ≤ 50 символов),
+имя (строка без пробелов, длина ≤ 50 символов),
+вес (целое число от 1 до 300).
+Все поля разделены ровно одним пробелом.
+
+Выходные данные
+Для каждого человека, чей вес превышает средний вес всех людей, выведите 
+его фамилию и имя через пробел (каждого на отдельной строке).
+Если таких людей нет, выведите в точности строку No candidates (без кавычек).
+В конце строки допустим перевод на новую строку (но не обязателен).
+
+Вход:             
+5
+Ivanov Ivan 70
+Petrov Petr 80
+Sidorov Sid 60
+Kuznecov Kuzma 90
+Smirnov Sasha 50
+
+Выход: 
+Petrov Petr
+Kuznecov Kuzma
+
+Вход:
+3
+Ivanov Ivan 50
+Petrov Petr 50
+Sidorov Sid 50
+
+Выход:
+No candidates
+----------------------------------------------------------------------*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct {
+    char name[51];
+    char surname[51];
+    int weigh;
+} Person;
+
+int main() {
+    char s[1000];
+    int n = 0;
+
+    scanf("%d", &n);
+
+    getchar();
+
+    Person person[n];
+
+    for (int i = 0; i < n; i++) {
+        fgets(s, sizeof(s), stdin);
+        char *temp = strtok(s, " \n");
+        if (temp) strcpy(person[i].name, temp);
+        temp = strtok(NULL, " \n");
+        if (temp) strcpy(person[i].surname, temp);
+        person[i].weigh = atoi(strtok(NULL, " \n"));
+    }
+
+    int total_weigh = 0;
+    for (int i = 0; i < n; i++) {
+        total_weigh += person[i].weigh;
+    }
+
+    double avarage = total_weigh / n;
+    int count = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (person[i].weigh > avarage) {
+            printf("%s %s\n", person[i].name, person[i].surname);
+            count ++;
+        }
+    }
+
+    if (!count) printf("No candidates\n");
+
     return 0;
 }
